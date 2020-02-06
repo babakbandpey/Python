@@ -33,15 +33,25 @@ for x in range(1,11):
 
 hr()
 
+l = [x*y for x in range(1, 11) for y in range(1, 11)]
+print(l)
+
+hr()
+
 
 letters = range(ord("a"), ord("d"))
 print(letters)
 for a in letters:
 	for b in letters:
 		for c in letters:
-			print(chr(a),chr(b),chr(c), end=" - ")
+			print(chr(a),chr(b),chr(c), end=", ")
 		print(" ")
  
+hr()
+
+l = [chr(a)+chr(b)+chr(c) for a in letters for b in letters for c in letters]
+print(l)
+
 hr()
 
 

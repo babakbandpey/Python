@@ -37,10 +37,9 @@ def encrypt(text, displacement):
 print(create_ceaser_wheel(10))
 
 
-
 text = input("Type some text to be encrypted: ")
 
-for x in range(0,40):
+for x in range(0,26):
 	encrypt(text, x)
 
 
