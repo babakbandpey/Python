@@ -185,21 +185,16 @@ def myAnswer26(data):
 			if len(text + words[x]) > 8 :
 				continue
 			
-			try:
-				float(text + words[x])
-				continue
-			except:
-				if len(str(text + words[x]))  <= 8:
-					print(str(text + words[x]), sha256(str(text + words[x]).encode('utf-8')).hexdigest())
+			print(str(text + words[x]), sha256(str(text + words[x]).encode('utf-8')).hexdigest())
 
-				if len(str(text + words[x]))  <= 8 and sha256(str(text + words[x]).encode('utf-8')).hexdigest() == encrypted:
-					print("----------------------- FOUND ------------------------")
-					return str(text + words[x])
-				else:
-					result = decrypt(encrypted, words, str(text + words[x]))
-					if(result != None and result != ""):
-						print("=======================   ", result)
-						return result
+			if sha256(str(text + words[x]).encode('utf-8')).hexdigest() == encrypted:
+				print("----------------------- FOUND ------------------------")
+				return str(text + words[x])
+			else:
+				result = decrypt(encrypted, words, str(text + words[x]))
+				if(result != None and result != ""):
+					print("=======================   ", result)
+					return result
 
 		return ""
 

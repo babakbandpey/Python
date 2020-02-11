@@ -14,5 +14,5 @@ while True:
 	sentence = connectionSocket.recv(1024).decode()
 	capitalizedSentence = sentence.upper()
 	connectionSocket.send(capitalizedSentence.encode())
-	print(connectionSocket, addr, end = ", \n")
+	# print(connectionSocket, addr, end = ", \n")
 	connectionSocket.close()
