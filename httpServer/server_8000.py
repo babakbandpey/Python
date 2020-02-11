@@ -20,8 +20,8 @@ class Server(http.server.SimpleHTTPRequestHandler):
 			images = glob.glob('*.jpg')
 			rand = random.randint(0,len(images)-1)
 			filepath = images[rand]
-			imagestring = "<img src = \"" + images[rand] + "\" height = 1028 width = 786 align = \"right\"/> </body> </html>"
-			self.wfile.write(bytes(imagestring, 'UTF-8'))
+#			imagestring = "<img src = \"" + images[rand] + "\" height = 1028 width = 786 align = \"right\"/> </body> </html>"
+#			self.wfile.write(bytes(imagestring, 'UTF-8'))
 		else:
 			imgname = self.path
 			print ("Image requested is: ", imgname[1:])
