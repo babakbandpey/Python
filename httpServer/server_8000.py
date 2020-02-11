@@ -16,7 +16,7 @@ class Server(http.server.SimpleHTTPRequestHandler):
 			self.send_response(200, 'OK')
 			self.send_header('Content-type', 'text/html')
 			self.end_headers()
-			self.wfile.write(bytes("<html> <head><title> Hello World </title> </head> <body>Hello from web server</body></html>", 'UTF-8'))
+			self.wfile.write(bytes("", 'UTF-8'))
 			images = glob.glob('*.jpg')
 			rand = random.randint(0,len(images)-1)
 			filepath = images[rand]
