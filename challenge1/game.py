@@ -158,21 +158,44 @@ def myAnswer26(data):
 
 	words = []
 
+	import re
+
 	for x in arr:
-		if(type(x) != str):	
-			words += list(x) + [s.title() for s in list(x)] + [s.lower() for s in list(x)] + [s.upper() for s in list(x)]
+		if(type(x) != str):
+			words += list(x)
+			# words += list(x) + [a.lower() for a in s.split() for s in list(x)] + [a.upper() for a in s.split() for s in list(x)]
 		else:
 			words.append(x)
-			words.append(x.title())
-			words.append(x.lower())
-			words.append(x.upper())
+
+	
+	letters = []
+	tmp = "".join(words)
+
+	for letter in tmp:
+		letters.append(letter)
+
+	print(letters)
+
+	letters = list(set(letters))
+#	letters.sort()
+	print(letters)
 
 
-	words = list(set([s for s in words if s.isalpha()])) + ['0', '9', '5', '8', '19', '84', '20', '14']
-	words.sort()
-	print(words)
+	import itertools as it
 
-	import re
+	ls = it.permutations(letters, 8)
+	for x in ls:
+		to_hash = "".join(list(x))
+		if bool(re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])', to_hash)) == False:
+			continue
+
+		print(to_hash)
+
+		if sha256(to_hash.encode('utf-8')).hexdigest() == hash256:
+			print("----------------------- FOUND ------------------------")
+			print(to_hash)
+			break
+	
 
 	def decrypt(encrypted, words, text = ""):
 		if(len(text) >= 8):
@@ -184,7 +207,7 @@ def myAnswer26(data):
 				continue
 
 			if len(to_hash) == 8 and bool(re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])', to_hash)):
-				# print(to_hash, sha256(to_hash.encode('utf-8')).hexdigest(), len(sha256(to_hash.encode('utf-8')).hexdigest()))
+				print(to_hash, sha256(to_hash.encode('utf-8')).hexdigest(), len(sha256(to_hash.encode('utf-8')).hexdigest()))
 
 			if len(to_hash) == 8 and bool(re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])', to_hash)) and sha256(to_hash.encode('utf-8')).hexdigest() == encrypted:
 				print("----------------------- FOUND ------------------------")
@@ -197,10 +220,10 @@ def myAnswer26(data):
 
 		return ""
 
-	return decrypt(hash256, words)
-	
+	# return decrypt(hash256, words)
 
-for question_number in range(0, 27):
+
+for question_number in range(26, 27):
 	game.question(question_number)
 	if question_number == 0:		
 		game.answer(question_number, myAnswer0(game.data(question_number)))
@@ -259,4 +282,4 @@ for question_number in range(0, 27):
 	elif question_number == 26:
 		game.answer(question_number, myAnswer26(game.data(question_number)))
 
-
+# game.score()
