@@ -46,8 +46,7 @@ def myAnswer7(data):
 
 # Return a sorted list, where the duplicates are removed
 def myAnswer8(data):
-	data = set(data)
-	data = list(data)
+	data = list(set(data))
 	data.sort()
 	return data
 
@@ -58,22 +57,17 @@ def myAnswer9(data):
 
 # The answer is the whole sentence with the word 'star' spelled backwards
 def myAnswer10(data):
-	data = data.replace("staring", "****")
-	data = data.replace("star", "rats")
-	data = data.replace("****", "staring")
-	return data
+	return data.replace("staring", "****").replace("star", "rats").replace("****", "staring")
 
 # Return a list containing 20 values starting with the number in data and incrementing with 5
 def myAnswer11(data):
 	result = [data]
-	print(result)
 	for x in range(1, 20):
 		result.append(result[x-1] + 5)
 	return result
 
 # The data is a list of tuples containing ip-addresses and number of connections. return the number of connections for ip-address 192.168.1.212
 def myAnswer12(data):
-	print(data)
 	for t in data:
 		t = list(t)
 		if(t[0] == "192.168.1.212"):
@@ -160,38 +154,43 @@ def myAnswer26(data):
 	print(data)
 	from hashlib import sha256
 	hash256, arr = data
-	print(hash256, arr)
+	print(hash256, len(hash256), arr)
 
 	words = []
 
 	for x in arr:
 		if(type(x) != str):	
-			words += list(x) + [s.title() for s in list(x) if s.isalpha()]
+			words += list(x) + [s.title() for s in list(x)] + [s.lower() for s in list(x)] + [s.upper() for s in list(x)]
 		else:
 			words.append(x)
 			words.append(x.title())
+			words.append(x.lower())
+			words.append(x.upper())
 
 
-	words = list(set([s for s in words if len(s) < 8]))
-
+	words = list(set([s for s in words if s.isalpha()])) + ['0', '9', '5', '8', '19', '84', '20', '14']
+	words.sort()
 	print(words)
 
+	import re
 
 	def decrypt(encrypted, words, text = ""):
 		if(len(text) >= 8):
 			return ""
 
 		for x in range(len(words)):
-			if len(text + words[x]) > 8 :
+			to_hash = text + words[x]
+			if len(to_hash) > 8:
 				continue
-			
-			print(str(text + words[x]), sha256(str(text + words[x]).encode('utf-8')).hexdigest())
 
-			if sha256(str(text + words[x]).encode('utf-8')).hexdigest() == encrypted:
+			if len(to_hash) == 8 and bool(re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])', to_hash)):
+				# print(to_hash, sha256(to_hash.encode('utf-8')).hexdigest(), len(sha256(to_hash.encode('utf-8')).hexdigest()))
+
+			if len(to_hash) == 8 and bool(re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])', to_hash)) and sha256(to_hash.encode('utf-8')).hexdigest() == encrypted:
 				print("----------------------- FOUND ------------------------")
-				return str(text + words[x])
+				return to_hash
 			else:
-				result = decrypt(encrypted, words, str(text + words[x]))
+				result = decrypt(encrypted, words, to_hash)
 				if(result != None and result != ""):
 					print("=======================   ", result)
 					return result
@@ -201,7 +200,7 @@ def myAnswer26(data):
 	return decrypt(hash256, words)
 	
 
-for question_number in range(26, 27):
+for question_number in range(0, 27):
 	game.question(question_number)
 	if question_number == 0:		
 		game.answer(question_number, myAnswer0(game.data(question_number)))
@@ -259,6 +258,5 @@ for question_number in range(26, 27):
 		game.answer(question_number, myAnswer25(game.data(question_number)))
 	elif question_number == 26:
 		game.answer(question_number, myAnswer26(game.data(question_number)))
-
 
 
