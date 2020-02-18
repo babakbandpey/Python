@@ -22,38 +22,3 @@ for i in range(7):
 			print("".join(list(x)))
 			break
 
-
-def brut(data):
-	print(data)
-	from hashlib import sha1
-	hash256, words = data
-	print(hash256, len(hash256), words)
-
-	import re
-
-	def decrypt(encrypted, words, text = ""):
-		if(len(text) >= 6):
-			return ""
-
-		for x in range(len(words)):
-			to_hash = text + words[x]
-			if len(to_hash) > 6:
-				continue
-
-			# print(to_hash, sha1(to_hash.encode('utf-8')).hexdigest(), len(sha1(to_hash.encode('utf-8')).hexdigest()))
-
-			if sha1(to_hash.encode('utf-8')).hexdigest() == encrypted:
-				print("----------------------- FOUND ------------------------")
-				return to_hash
-			else:
-				result = decrypt(encrypted, words, to_hash)
-				if(result != None and result != ""):
-					print("=======================   ", result)
-					return result
-
-		return ""
-
-	return decrypt(hash256, words)
-
-
-# print(brut(['29325ad40aa35e83fb2066d10c7c75122c082205', ['1', '!', '6', '&', '0', '=', '+', '?', 'd', 'D', 'm', 'M']]))
